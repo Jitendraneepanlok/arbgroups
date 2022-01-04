@@ -27,6 +27,7 @@ import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails
 import java.text.SimpleDateFormat
 import java.util.*
 
+// do your payment here
 
 class PaymentActivity : AppCompatActivity(), PaymentStatusListener {
 
