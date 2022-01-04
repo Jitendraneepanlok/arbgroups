@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Arb Groups</string>
+    <string name="ARB_GROUPS">ARB GROUPS</string>
+    <string name="app_name_welcome">Welcome, Please login to your account</string>
+    <string name="login_here">Login Here</string>
+    <string name="forget_password">Forgot Password ?          </string>
+    <string name="signin">Log In</string>
+    <string name="user_id">User Name</string>
+    <string name="password">Password</string>
+    <string name="txt_remmber">Remember</string>
+    <string name="submit">Submit</string>
+    <string name="forgot_pass">Reset your ARB GROUPS Password</string>
+    <string name="registered_mobile_no">Enter Registered Mobile No.</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="send_reset_otp">Send Reset OTP</string>
+    <string name="otp">OTP</string>
+    <string name="new_password">Enter New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="areyousure">Are you sure want to logout ?</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="confirm_exit">Confirm Exit ..!!</string>
+    <string name="pay">\u20B9 10000.00</string>
+
+
+</resources>
