@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arv.groups.Adapters.DetailsAdapter
 import com.arv.groups.FoxFun
-import com.arv.groups.Model.DataModel
 import com.arv.groups.R
 import com.arv.groups.prefrences.SessionManager
 import org.json.JSONArray
@@ -25,7 +24,6 @@ import org.json.JSONObject
 class HomeActivity : AppCompatActivity() {
     private lateinit var recycler_details: RecyclerView
     private lateinit var adapter: DetailsAdapter
-    private var dataList = mutableListOf<DataModel>()
     private lateinit var img_logout: AppCompatImageView
     private lateinit var img_profile: AppCompatImageView
     lateinit var sessionManager: SessionManager

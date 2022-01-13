@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,7 +36,8 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_number"
@@ -44,7 +45,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/registered_mobile_no"
                         android:inputType="number"
-                        android:maxLength="10"/>
+                        android:maxLength="10"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/gray"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -70,13 +73,16 @@
                     android:layout_below="@+id/btn_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:textColorHint="@color/black">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_otp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/otp"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/gray"
                         android:inputType="number"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -95,13 +101,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/new_password"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/gray"
                     android:inputType="textPassword" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -112,14 +121,17 @@
                 android:layout_below="@+id/input_3"
                 android:layout_width="match_parent"
                 android:layout_marginTop="20dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/gray"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

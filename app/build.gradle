@@ -44,4 +44,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     //write pdf library
     implementation 'com.itextpdf:itextg:5.5.10'
+    // EasyUpiPayment Library
+    implementation 'dev.shreyaspatil.EasyUpiPayment:EasyUpiPayment:3.0.3'
 }

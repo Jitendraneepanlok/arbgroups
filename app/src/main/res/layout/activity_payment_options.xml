@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="vertical"
+    android:background="@color/white">
+
+    <include layout="@layout/app_bar"
+        android:id="@+id/tool_bar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tool_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPasswordLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_vpa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="VPA"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Payee Name"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_payee_merchant_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Payee Merchant Code"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_transaction_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Transaction ID"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_transaction_ref_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Transaction Ref ID"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textColorHint="@color/black">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/field_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Amount (XX.XX)"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/gray"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="UPI App : "
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
+        <RadioGroup
+            android:id="@+id/radioAppChoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_margin="10dp"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:drawableLeft="@drawable/arb_group"
+                android:textColor="@color/black"
+                android:text="DEFAULT"
+                android:buttonTint="@color/website_color"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_amazonpay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AMAZON PE"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:buttonTint="@color/website_color"
+                android:drawableLeft="@drawable/amazon_pe"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_bhim_upi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="BHIM UPI"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:buttonTint="@color/website_color"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/bhim_upi"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_google_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/website_color"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="GOOGLE PE"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/google_pe"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_phonepe"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PHONE PE"
+                android:layout_margin="10dp"
+                android:buttonTint="@color/website_color"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:drawableLeft="@drawable/phone_pe"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+            <androidx.appcompat.widget.AppCompatRadioButton
+                android:id="@+id/app_paytm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PAYTM"
+                android:layoutDirection="rtl"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                android:buttonTint="@color/website_color"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:drawableLeft="@drawable/pay_tm"
+                android:textColor="@color/black"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"/>
+
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Pay with UPI"
+            android:layout_margin="40dp"
+            android:background="@drawable/btn_shape"
+            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/textView_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Click above button to Pay"
+            android:textColor="#000000"
+            android:textSize="19sp"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.arv.groups" >
+    package="com.arv.groups">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -15,13 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ArbGroups"
-        android:usesCleartextTraffic="true" >
-
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".Activity.PaymentActivity"
+            android:name=".Activity.PaymentOptionsActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="adjustNothing" />
+
         <activity
             android:name=".Activity.ViewAllActivity"
             android:exported="true"
@@ -46,7 +46,7 @@
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" >
+            android:windowSoftInputMode="adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

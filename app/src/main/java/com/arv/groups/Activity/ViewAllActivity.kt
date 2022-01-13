@@ -1,43 +1,34 @@
 package com.arv.groups.Activity
 
 import android.Manifest
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.arv.groups.Adapters.DetailsAdapter
-import com.arv.groups.Adapters.ViewAllDetailsAdapter
-import com.arv.groups.Model.DataModel
-import com.arv.groups.Model.ViewAllDetailsDataModel
 import com.arv.groups.R
-import android.graphics.Bitmap
 import android.os.Build
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.arv.groups.Adapters.DetailsAdapter
+import com.arv.groups.Adapters.ReceiptAdapter
+import com.arv.groups.FoxFun
 import com.itextpdf.text.Document
-import com.itextpdf.text.Font
-import com.itextpdf.text.FontFactory.COURIER
 import com.itextpdf.text.Paragraph
-import com.itextpdf.text.pdf.PdfName
-import com.itextpdf.text.pdf.PdfName.COURIER
 import com.itextpdf.text.pdf.PdfWriter
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class ViewAllActivity : AppCompatActivity() {
-
-    private lateinit var recycler_View_all_details: RecyclerView
-    private lateinit var adapter: ViewAllDetailsAdapter
-    private var dataList = mutableListOf<ViewAllDetailsDataModel>()
-
     private lateinit var tv_instalment_amount_value: AppCompatTextView
     private lateinit var tv_plot_number_value: AppCompatTextView
     private lateinit var tv_project_name_value: AppCompatTextView
@@ -56,9 +47,7 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var tv_invoice_id_value: AppCompatTextView
     private lateinit var pdfdownload: AppCompatImageView
     private lateinit var btn_pay : AppCompatTextView
-
     private val STORAGE_CODE: Int = 100;
-
     private lateinit var InstallmentAmount: String
     private lateinit var plotNumber: String
     private lateinit var ProjectName: String
@@ -76,6 +65,8 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var AgentName: String
     private lateinit var InvoiceID: String
     private lateinit var PDFData: String
+    private lateinit var reciept_recycler :RecyclerView
+    private lateinit var adapter: ReceiptAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,6 +74,60 @@ class ViewAllActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_all)
 
         initView()
+        getRecieptData()
+    }
+
+    private fun getRecieptData() {
+        reciept_recycler = findViewById<RecyclerView>(R.id.reciept_recycler)
+        reciept_recycler.layoutManager = LinearLayoutManager(applicationContext)
+        adapter = applicationContext?.let { ReceiptAdapter(it) }!!
+        reciept_recycler.adapter = adapter
+
+        val pDialog = ProgressDialog(this@ViewAllActivity)
+        pDialog.setMessage(application?.getString(R.string.dialog_msg));
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        val username: String = "8447094063"
+        var mq :String = "select receiptnumber,receiptdate,paymentmode,notes,paymentbankname,chequedate,chequeno ,(select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID)  InstallmentAmount ,(select top 1 InstallmentDate  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentDate,(paidamount) as paidamount FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='8447094063'   and PlotNumber='297' order by  InstallmentDate"
+
+        FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
+            override fun onSuccess(Result1: JSONObject?) {
+                if (Result1?.length()!! > 0) {
+                    pDialog.dismiss()
+                    var Result: JSONArray = JSONArray();
+                    try {
+                        Result = JSONArray(Result1.getString("Table1"));
+                    } catch (e: Exception) {
+                        e.printStackTrace();
+                    }
+                    if (Result.length() > 0) {
+                        pDialog.dismiss()
+
+                        adapter.setDataList(Result)
+                        adapter.notifyDataSetChanged()
+
+                        for (i in 0 until Result.length()) {
+                            Log.e("dsa",""+ FoxFun.getColVal(Result, i, "receiptnumber"))
+
+                            pDialog.dismiss()
+                        }
+                    } else {
+                        pDialog.dismiss()
+                        Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    pDialog.dismiss()
+                    Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            override fun onError(Error: String?) {
+                Log.e("ApiFail", "" + Error.toString())
+                pDialog.dismiss()
+            }
+        })
+
     }
 
     private fun initView() {
@@ -170,7 +215,10 @@ class ViewAllActivity : AppCompatActivity() {
 
         btn_pay = findViewById<AppCompatTextView>(R.id.btn_pay)
         btn_pay.setOnClickListener(){
-            startActivity(Intent(applicationContext,PaymentActivity::class.java))
+            val intent :Intent = Intent(applicationContext,PaymentOptionsActivity::class.java)
+            intent.putExtra("paidamount",paidamount)
+           startActivity(intent)
+
         }
 
         pdfdownload = findViewById<AppCompatImageView>(R.id.pdfdownload)
@@ -208,11 +256,7 @@ class ViewAllActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             STORAGE_CODE -> {
