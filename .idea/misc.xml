@@ -18,6 +18,7 @@
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/ic_logout.xml" value="0.2703125" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/ic_logout_com.xml" value="0.2703125" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/ic_sign_in.xml" value="0.2703125" />
+        <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/ic_user_profile.xml" value="0.2703125" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/ic_username.xml" value="0.2703125" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/round_corner_buttom.xml" value="0.2703125" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/drawable/rounded_corner.xml" value="0.2703125" />
@@ -28,13 +29,14 @@
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/activity_payment.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/activity_view_all.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/app_bar.xml" value="0.25416666666666665" />
-        <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/app_bar_home.xml" value="0.4" />
+        <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/app_bar_home.xml" value="0.264" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/custom_logout_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/demo.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/home_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/list_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/pay_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/payment_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Neepanlok Projects/ARB GROUPS/Arb Groups/app/src/main/res/layout/profile_layout.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

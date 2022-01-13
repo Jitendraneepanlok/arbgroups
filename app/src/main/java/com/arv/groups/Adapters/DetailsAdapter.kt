@@ -3,6 +3,7 @@ package com.arv.groups.Adapters
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,15 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arv.groups.Activity.LoginActivity
 import com.arv.groups.Activity.PaymentActivity
 import com.arv.groups.Activity.ViewAllActivity
+import com.arv.groups.FoxFun
 import com.arv.groups.Model.DataModel
 import com.arv.groups.R
+import org.json.JSONArray
+import org.json.JSONObject
 
 class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter.ViewHolder>() {
 
-    var dataList = emptyList<DataModel>()
+    var dataList = JSONArray()
     private lateinit var mlistner: onItemClickedListner
 
-    internal fun setDataList(dataList: List<DataModel>) {
+    internal fun setDataList(dataList: JSONArray) {
         this.dataList = dataList
     }
 
@@ -34,20 +38,20 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
 
     class ViewHolder(itemView: View, listner: onItemClickedListner) :
         RecyclerView.ViewHolder(itemView) {
-        var image: AppCompatImageView
-        var tv_plot_value: AppCompatTextView
-        var tv_due_amount_value: AppCompatTextView
-        var tv_full_final_value: AppCompatTextView
-        var tv_pay_status: AppCompatTextView
-        var txt_view :AppCompatTextView
+        var tv_project_name_value: AppCompatTextView
+        var tv_agent_number_value: AppCompatTextView
+        var tv_agent_name_value: AppCompatTextView
+        var tv_plot_number_value: AppCompatTextView
+        var tv_plot_name_value: AppCompatTextView
+        var txt_view: AppCompatTextView
 
 
         init {
-            image = itemView.findViewById(R.id.image)
-            tv_plot_value = itemView.findViewById(R.id.tv_plot_value)
-            tv_due_amount_value = itemView.findViewById(R.id.tv_due_amount_value)
-            tv_full_final_value = itemView.findViewById(R.id.tv_full_final_value)
-            tv_pay_status = itemView.findViewById(R.id.tv_pay_status)
+            tv_project_name_value = itemView.findViewById(R.id.tv_project_name_value)
+            tv_agent_number_value = itemView.findViewById(R.id.tv_agent_number_value)
+            tv_agent_name_value = itemView.findViewById(R.id.tv_agent_name_value)
+            tv_plot_number_value = itemView.findViewById(R.id.tv_plot_number_value)
+            tv_plot_name_value = itemView.findViewById(R.id.tv_plot_name_value)
             txt_view = itemView.findViewById(R.id.txt_view)
 
             itemView.setOnClickListener {
@@ -63,47 +67,56 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
 
     override fun onBindViewHolder(holder: DetailsAdapter.ViewHolder, position: Int) {
 
-        // Get the data model based on position
-        var data = dataList[position]
+        // Get the data based JsonObject on position
+        var data: JSONObject = dataList[position] as JSONObject
+        Log.e("ads", "" + data)
+        var invoice_id: String = data.getString("InvoiceID")
+        var projectName: String = data.getString("ProjectName")
+        var agentNumber: String = data.getString("agentNumber")
+        var agentName: String = data.getString("AgentName")
+        var plotNumber: String = data.getString("plotNumber")
+        var planName: String = data.getString("PlanName")
+        var installmentAmount: String = data.getString("InstallmentAmount")
+        var propertyType: String = data.getString("PropertyType")
+        var PerSquareCost: String = data.getString("PerSquareCost")
+        var PropertySize: String = data.getString("PropertySize")
+        var MeasurementType: String = data.getString("MeasurementType")
+        var dimension: String = data.getString("dimension")
+        var paidamount: String = data.getString("paidamount")
+        var paidemi: String = data.getString("paidemi")
+        var baseamount: String = data.getString("baseamount")
+        var agentcode :String = data.getString("agentcode")
 
-        // Set item views based on your views and data model
-        holder.tv_plot_value.text = data.plot_number
-        holder.tv_due_amount_value.text = data.due_amount
-        holder.tv_full_final_value.text = data.full_final
-        holder.tv_pay_status.text = data.paid_status
-        holder.tv_pay_status.setOnClickListener() {
-            val intent = Intent(context, PaymentActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent)        }
 
-        holder.image.setImageResource(data.image)
+        // Set item views based on your views and JsonObject
+        holder.tv_project_name_value.text = projectName
+        holder.tv_agent_number_value.text = agentNumber
+        holder.tv_agent_name_value.text = agentName
+        holder.tv_plot_number_value.text = plotNumber
+        holder.tv_plot_name_value.text = planName
 
         holder.txt_view.setOnClickListener() {
             val intent = Intent(context, ViewAllActivity::class.java)
+            intent.putExtra("InvoiceID", invoice_id)
+            intent.putExtra("ProjectName", projectName)
+            intent.putExtra("agentNumber", agentNumber)
+            intent.putExtra("AgentName", agentName)
+            intent.putExtra("plotNumber", plotNumber)
+            intent.putExtra("PlanName", planName)
+            intent.putExtra("InstallmentAmount", installmentAmount)
+            intent.putExtra("PropertyType", propertyType)
+            intent.putExtra("PerSquareCost", PerSquareCost)
+            intent.putExtra("PropertySize", PropertySize)
+            intent.putExtra("MeasurementType", MeasurementType)
+            intent.putExtra("dimension", dimension)
+            intent.putExtra("paidamount", paidamount)
+            intent.putExtra("paidemi", paidemi)
+            intent.putExtra("baseamount", baseamount)
+            intent.putExtra("agentcode",agentcode)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent)
         }
-
     }
 
-    private fun OpenDialog() {
-        val dialog = context?.let { Dialog(context, R.style.DialogTheme) }
-        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog?.setContentView(R.layout.payment_layout)
-        dialog?.setCancelable(true)
-
-        val img_close: AppCompatImageView = dialog!!.findViewById(R.id.img_close)
-        img_close.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog?.window!!.setGravity(Gravity.CENTER)
-        dialog?.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
-        dialog.show()
-    }
-
-    override fun getItemCount() = dataList.size
+    override fun getItemCount() = dataList.length()
 }

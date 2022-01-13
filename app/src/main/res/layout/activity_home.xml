@@ -7,19 +7,19 @@
     android:background="@color/white"
     tools:context=".Activity.HomeActivity">
 
-    <include layout="@layout/app_bar_home"
-        android:id="@+id/tool_bar"/>
-
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/app_bar_home" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tool_bar"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="5dp"
+        android:paddingBottom="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-       android:layout_margin="7dp"
-        android:paddingBottom="10dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tool_bar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
