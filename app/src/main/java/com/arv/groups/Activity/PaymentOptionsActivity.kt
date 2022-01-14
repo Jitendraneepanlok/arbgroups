@@ -36,7 +36,7 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment_options)
-        PaidAmount = intent.getStringExtra("paidamount").toString()
+        PaidAmount = intent.getStringExtra("InstallmentAmount").toString()
 
         initViews()
     }
@@ -53,6 +53,7 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
         field_transaction_ref_id = findViewById<TextInputEditText>(R.id.field_transaction_ref_id)
         field_description = findViewById<TextInputEditText>(R.id.field_description)
         field_amount = findViewById<TextInputEditText>(R.id.field_amount)
+        field_amount.setText(PaidAmount)
         radioAppChoice = findViewById<RadioGroup>(R.id.radioAppChoice)
 
 

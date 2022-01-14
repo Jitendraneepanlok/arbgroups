@@ -69,7 +69,7 @@ class HomeActivity : AppCompatActivity() {
         val username: String = "8447094063"
         var mq :String = "select InvoiceID, InstallmentAmount,plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,\n" +
                 "PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,sum(paidamount) paidamount,count(paidamount)-1 as paidemi,max(baseamount) baseamount from (SELECT pl.InvoiceID,  (select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentAmount,  plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,(pl.paidamount) as paidamount,baseamount \n" +
-                "FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='8447094063') t group by InvoiceID, InstallmentAmount, plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension"
+                "FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='"+username+"') t group by InvoiceID, InstallmentAmount, plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension"
 
         FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
             override fun onSuccess(Result1: JSONObject?) {
@@ -86,12 +86,13 @@ class HomeActivity : AppCompatActivity() {
 
                         adapter.setDataList(Result)
                         adapter.notifyDataSetChanged()
+                        pDialog.dismiss()
 
-                        for (i in 0 until Result.length()) {
+                        /*for (i in 0 until Result.length()) {
                             Log.e("dsa",""+FoxFun.getColVal(Result, i, "plotNumber"))
 
                             pDialog.dismiss()
-                        }
+                        }*/
                     } else {
                         pDialog.dismiss()
                         Toast.makeText(this@HomeActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();

@@ -4,6 +4,11 @@ import android.Manifest
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
+import android.graphics.pdf.PdfDocument.PageInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -24,11 +29,14 @@ import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ViewAllActivity : AppCompatActivity() {
+
     private lateinit var tv_instalment_amount_value: AppCompatTextView
     private lateinit var tv_plot_number_value: AppCompatTextView
     private lateinit var tv_project_name_value: AppCompatTextView
@@ -47,7 +55,9 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var tv_invoice_id_value: AppCompatTextView
     private lateinit var pdfdownload: AppCompatImageView
     private lateinit var btn_pay : AppCompatTextView
+
     private val STORAGE_CODE: Int = 100;
+
     private lateinit var InstallmentAmount: String
     private lateinit var plotNumber: String
     private lateinit var ProjectName: String
@@ -65,6 +75,7 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var AgentName: String
     private lateinit var InvoiceID: String
     private lateinit var PDFData: String
+
     private lateinit var reciept_recycler :RecyclerView
     private lateinit var adapter: ReceiptAdapter
 
@@ -82,6 +93,14 @@ class ViewAllActivity : AppCompatActivity() {
         reciept_recycler.layoutManager = LinearLayoutManager(applicationContext)
         adapter = applicationContext?.let { ReceiptAdapter(it) }!!
         reciept_recycler.adapter = adapter
+        adapter.setOnItemClickListner(object : ReceiptAdapter.onItemClickedListner {
+            override fun onItemclicked(position: Int) {
+                when (position) {
+                    0 -> Log.e("postion 0", "")
+                    1 -> Log.e("postion 1", "")
+                }
+            }
+        })
 
         val pDialog = ProgressDialog(this@ViewAllActivity)
         pDialog.setMessage(application?.getString(R.string.dialog_msg));
@@ -89,7 +108,15 @@ class ViewAllActivity : AppCompatActivity() {
         pDialog.show();
 
         val username: String = "8447094063"
-        var mq :String = "select receiptnumber,receiptdate,paymentmode,notes,paymentbankname,chequedate,chequeno ,(select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID)  InstallmentAmount ,(select top 1 InstallmentDate  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentDate,(paidamount) as paidamount FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='8447094063'   and PlotNumber='297' order by  InstallmentDate"
+        val plotnumber :String ="297"
+
+        var mq :String = "select receiptnumber,receiptdate,paymentmode,notes,paymentbankname,chequedate,chequeno , " +
+                "(select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID)  InstallmentAmount " +
+                ",(select top 1 InstallmentDate  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) " +
+                "InstallmentDate " +
+                ",(paidamount) as paidamount " +
+                "FROM PropertyDetails pl " +
+                " WHERE LTRIM(RTRIM(PhoneNumber))='"+username+"'   and PlotNumber='"+plotnumber+"' order by  InstallmentDate "
 
         FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
             override fun onSuccess(Result1: JSONObject?) {
@@ -106,12 +133,12 @@ class ViewAllActivity : AppCompatActivity() {
 
                         adapter.setDataList(Result)
                         adapter.notifyDataSetChanged()
-
-                        for (i in 0 until Result.length()) {
+                        pDialog.dismiss()
+                       /* for (i in 0 until Result.length()) {
                             Log.e("dsa",""+ FoxFun.getColVal(Result, i, "receiptnumber"))
 
                             pDialog.dismiss()
-                        }
+                        }*/
                     } else {
                         pDialog.dismiss()
                         Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
@@ -216,7 +243,7 @@ class ViewAllActivity : AppCompatActivity() {
         btn_pay = findViewById<AppCompatTextView>(R.id.btn_pay)
         btn_pay.setOnClickListener(){
             val intent :Intent = Intent(applicationContext,PaymentOptionsActivity::class.java)
-            intent.putExtra("paidamount",paidamount)
+            intent.putExtra("InstallmentAmount",InstallmentAmount)
            startActivity(intent)
 
         }
@@ -240,7 +267,40 @@ class ViewAllActivity : AppCompatActivity() {
 
         PDFData = "Invoice ID : " + InvoiceID + "\n" + "Installment Amount : " + InstallmentAmount + "\n" + "Plot Number : " + plotNumber + "\n" + "Project Name : " + ProjectName + "\n" + "Property Type : " + PropertyType + "\n" + "Agent Code : " + agentcode + "\n" + "Agent Number : " + agentNumber + "\n" + "Agent Name : " + AgentName + "\n"+"Per Square Cost : " + PerSquareCost + "\n" + "Property Size : " + PropertySize + "\n" + "Plan Name : " + PlanName + "\n" + "Measurement Type : " + MeasurementType + "\n" + "Dimension : " + dimension + "\n" + "Paid Amount : " + paidamount + "\n" + "Paid Emi : " + paidemi + "\n" + "Base Amount : " + baseamount
 
-        val mDoc = Document()
+        var document = PdfDocument()
+        var pageInfo = PageInfo.Builder(300, 600, 1).create()
+        var page = document.startPage(pageInfo)
+        var canvas = page.canvas
+        var paint = Paint()
+        paint.color = Color.RED
+        canvas.drawCircle(50f, 50f, 30f, paint)
+        paint.color = Color.BLACK
+        canvas.drawText(PDFData, 80f, 50f, paint)
+        document.finishPage(page)
+        pageInfo = PageInfo.Builder(300, 600, 2).create()
+        page = document.startPage(pageInfo)
+        canvas = page.canvas
+        paint = Paint()
+        paint.color = Color.BLUE
+        canvas.drawCircle(100f, 100f, 100f, paint)
+        document.finishPage(page)
+        var directory_path = Environment.getExternalStorageDirectory().path + "/Arbgroup/"
+        var file = File(directory_path)
+        if (!file.exists()) {
+            file.mkdirs()
+        }
+        var targetPdf = directory_path + ".pdf"
+        var filePath = File(targetPdf)
+        try {
+            document.writeTo(FileOutputStream(filePath))
+            Toast.makeText(this, "File Saved", Toast.LENGTH_LONG).show()
+        } catch (e: IOException) {
+            Log.e("main", "error $e")
+            Toast.makeText(this, "Something wrong", Toast.LENGTH_LONG).show()
+        }
+        // close the document
+        document.close()
+        /*val mDoc = Document()
         val mFileName = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(System.currentTimeMillis())
         val mFilePath = Environment.getExternalStorageDirectory()
             .toString() + "/" + "ARBGROUP " + mFileName + ".pdf"
@@ -253,7 +313,7 @@ class ViewAllActivity : AppCompatActivity() {
             Toast.makeText(applicationContext, "$mFileName.pdf\nis saved to\n$mFilePath", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-        }
+        }*/
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

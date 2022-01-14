@@ -489,12 +489,36 @@
 
             </RelativeLayout>
 
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/reciept_recycler"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:layout_margin="10dp"
-                 android:layout_below="@+id/rl1"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl1">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:id="@+id/tv_receipt"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold"
+                    android:text="Receipt here :"
+                    android:textColor="@color/black"/>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/reciept_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_receipt"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp" />
+
+            </RelativeLayout>
+
+
 
 
         </RelativeLayout>
