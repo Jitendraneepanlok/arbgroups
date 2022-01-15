@@ -5,6 +5,8 @@ import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.Window
@@ -27,6 +29,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var img_logout: AppCompatImageView
     private lateinit var img_profile: AppCompatImageView
     lateinit var sessionManager: SessionManager
+    private var doubleBackToExitPressedOnce = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +39,7 @@ class HomeActivity : AppCompatActivity() {
         initView()
         CallCardOneApi()
     }
+
     private fun initView() {
         img_logout = findViewById<AppCompatImageView>(R.id.img_logout)
         img_logout.setOnClickListener() {
@@ -67,9 +72,10 @@ class HomeActivity : AppCompatActivity() {
         pDialog.show();
 
         val username: String = "8447094063"
-        var mq :String = "select InvoiceID, InstallmentAmount,plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,\n" +
-                "PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,sum(paidamount) paidamount,count(paidamount)-1 as paidemi,max(baseamount) baseamount from (SELECT pl.InvoiceID,  (select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentAmount,  plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,(pl.paidamount) as paidamount,baseamount \n" +
-                "FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='"+username+"') t group by InvoiceID, InstallmentAmount, plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension"
+        var mq: String =
+            "select InvoiceID, InstallmentAmount,plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,\n" +
+                    "PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,sum(paidamount) paidamount,count(paidamount)-1 as paidemi,max(baseamount) baseamount from (SELECT pl.InvoiceID,  (select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentAmount,  plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,(pl.paidamount) as paidamount,baseamount \n" +
+                    "FROM PropertyDetails pl WHERE LTRIM(RTRIM(PhoneNumber))='" + username + "') t group by InvoiceID, InstallmentAmount, plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension"
 
         FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
             override fun onSuccess(Result1: JSONObject?) {
@@ -95,11 +101,16 @@ class HomeActivity : AppCompatActivity() {
                         }*/
                     } else {
                         pDialog.dismiss()
-                        Toast.makeText(this@HomeActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                            this@HomeActivity,
+                            "!Invalid Credientials.",
+                            Toast.LENGTH_SHORT
+                        ).show();
                     }
                 } else {
                     pDialog.dismiss()
-                    Toast.makeText(this@HomeActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@HomeActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT)
+                        .show();
                 }
             }
 
@@ -121,14 +132,14 @@ class HomeActivity : AppCompatActivity() {
         val tv_name: AppCompatTextView = dialog!!.findViewById(R.id.tv_name)
         tv_name.setText(sessionManager.getUserData(SessionManager.NAME).toString())
 
-        val tv_care_of_name :AppCompatTextView = dialog!!.findViewById(R.id.tv_care_of_name)
+        val tv_care_of_name: AppCompatTextView = dialog!!.findViewById(R.id.tv_care_of_name)
         tv_care_of_name.setText(sessionManager.getUserData(SessionManager.CAREOFNAME).toString())
 
-        val tv_phone_no :AppCompatTextView = dialog!!.findViewById(R.id.tv_phone_no)
+        val tv_phone_no: AppCompatTextView = dialog!!.findViewById(R.id.tv_phone_no)
         tv_phone_no.setText(sessionManager.getUserData(SessionManager.PHONENO).toString())
 
-        val tv_close :AppCompatTextView = dialog!!.findViewById(R.id.tv_close)
-        tv_close.setOnClickListener(){
+        val tv_close: AppCompatTextView = dialog!!.findViewById(R.id.tv_close)
+        tv_close.setOnClickListener() {
             dialog.dismiss()
         }
 
@@ -140,6 +151,7 @@ class HomeActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // when press logout icon
     private fun OpenLogoutDialog() {
         val dialog = this?.let { Dialog(it, R.style.DialogTheme) }
         dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -162,13 +174,27 @@ class HomeActivity : AppCompatActivity() {
         dialog?.window!!.setGravity(Gravity.CENTER)
         dialog?.window!!.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT
-        )
+            WindowManager.LayoutParams.WRAP_CONTENT)
         dialog.show()
     }
 
+    // go to login page when you logout
     private fun callnewPage() {
         finish()
-        startActivity(Intent(applicationContext, HomeActivity::class.java))
+        startActivity(Intent(applicationContext, LoginActivity::class.java))
+    }
+
+
+    // back press from exit app again
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler(Looper.getMainLooper()).postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }

@@ -20,6 +20,7 @@ import android.os.Build
 import android.os.Environment
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.arv.groups.Adapters.DetailsAdapter
 import com.arv.groups.Adapters.ReceiptAdapter
@@ -53,8 +54,10 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var tv_base_amount_value: AppCompatTextView
     private lateinit var tv_agent_name_value: AppCompatTextView
     private lateinit var tv_invoice_id_value: AppCompatTextView
-    private lateinit var pdfdownload: AppCompatImageView
-    private lateinit var btn_pay : AppCompatTextView
+    private lateinit var pdfdownload: AppCompatButton
+    private lateinit var btn_pay : AppCompatButton
+    private lateinit var tv_payment :AppCompatTextView
+    private lateinit var img_back : AppCompatImageView
 
     private val STORAGE_CODE: Int = 100;
 
@@ -79,11 +82,9 @@ class ViewAllActivity : AppCompatActivity() {
     private lateinit var reciept_recycler :RecyclerView
     private lateinit var adapter: ReceiptAdapter
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_all)
-
         initView()
         getRecieptData()
     }
@@ -233,14 +234,17 @@ class ViewAllActivity : AppCompatActivity() {
                 }
             }
         })*/
-        val tv_payment: AppCompatTextView = findViewById(R.id.tv_payment)
-        tv_payment.visibility = View.INVISIBLE
-        val img_back: AppCompatImageView = findViewById(R.id.img_back)
+        //toolbar showing textview
+
+        tv_payment = findViewById(R.id.tv_payment)
+        tv_payment.visibility = View.VISIBLE
+        tv_payment.setText("View All Details")
+        img_back = findViewById(R.id.img_back)
         img_back.setOnClickListener() {
             startActivity(Intent(this@ViewAllActivity, HomeActivity::class.java))
         }
 
-        btn_pay = findViewById<AppCompatTextView>(R.id.btn_pay)
+        btn_pay = findViewById<AppCompatButton>(R.id.btn_pay)
         btn_pay.setOnClickListener(){
             val intent :Intent = Intent(applicationContext,PaymentOptionsActivity::class.java)
             intent.putExtra("InstallmentAmount",InstallmentAmount)
@@ -248,7 +252,7 @@ class ViewAllActivity : AppCompatActivity() {
 
         }
 
-        pdfdownload = findViewById<AppCompatImageView>(R.id.pdfdownload)
+        pdfdownload = findViewById<AppCompatButton>(R.id.pdfdownload)
         pdfdownload.setOnClickListener() {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -284,6 +288,7 @@ class ViewAllActivity : AppCompatActivity() {
         paint.color = Color.BLUE
         canvas.drawCircle(100f, 100f, 100f, paint)
         document.finishPage(page)
+
         var directory_path = Environment.getExternalStorageDirectory().path + "/Arbgroup/"
         var file = File(directory_path)
         if (!file.exists()) {

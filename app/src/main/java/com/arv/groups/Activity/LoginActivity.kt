@@ -1,5 +1,6 @@
 package com.arv.groups.Activity
 
+import android.R.attr
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -19,11 +21,24 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.arv.groups.FoxFun
 import com.arv.groups.R
 import com.arv.groups.prefrences.SessionManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.reflect.KParameter
+import android.os.Environment
+import android.text.TextUtils
+import android.content.ContentResolver
+
+import android.provider.MediaStore
+
+import android.R.attr.mimeType
+
+import android.content.ContentValues
+import android.os.ParcelFileDescriptor
+import java.io.*
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -34,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var cb_check: AppCompatCheckBox
     private lateinit var btn_send_otp: Button
     private lateinit var btn_login: Button
+    private lateinit var floatingActionButton :FloatingActionButton
 
     lateinit var sessionManager: SessionManager
     var ischecked = false
@@ -93,6 +109,8 @@ class LoginActivity : AppCompatActivity() {
             // CallNewPage()
         }
     }
+
+
 
     private fun CheckOtpValidation() {
         etPassword = findViewById<TextInputEditText>(R.id.etPassword)
@@ -286,33 +304,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun checkForInternet(context: Context): Boolean {
-
-        // register activity with the connectivity manager service
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        // if the android version is equal to M
-        // or greater we need to use the
-        // NetworkCapabilities to check what type of
-        // network has the internet connection
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-            // Returns a Network object corresponding to
-            // the currently active default data network.
             val network = connectivityManager.activeNetwork ?: return false
-
-            // Representation of the capabilities of an active network.
             val activeNetwork = connectivityManager.getNetworkCapabilities(network) ?: return false
-
             return when {
-                // Indicates this network uses a Wi-Fi transport,
-                // or WiFi has network connectivity
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-
-                // Indicates this network uses a Cellular transport. or
-                // Cellular has network connectivity
                 activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-
                 // else return false
                 else -> false
             }
@@ -324,4 +322,8 @@ class LoginActivity : AppCompatActivity() {
             return networkInfo.isConnected
         }
     }
+
+
+
+
 }

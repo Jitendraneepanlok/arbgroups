@@ -30,8 +30,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="10dp"
                     android:paddingTop="15dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="20dp">
+                    android:paddingRight="10dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvInstallmentAmount"
@@ -454,21 +453,37 @@
                         android:text="@string/app_name"
                         android:textColor="@color/black" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <View
+                        android:id="@+id/view_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@+id/tv_invoice_id_value"
+                        android:layout_margin="10dp"
+                        android:background="@color/gray" />
+
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/pdfdownload"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_invoice_id_value"
+                        android:layout_below="@+id/view_1"
                         android:layout_alignParentLeft="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="20dp"
-                        android:src="@drawable/ic_print" />
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/btn_shape_pay"
+                        android:drawableLeft="@drawable/ic_print"
+                        android:drawablePadding="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:text="Download"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_pay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/tv_invoice_id_value"
+                        android:layout_below="@+id/view_1"
                         android:layout_alignParentRight="true"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
@@ -477,10 +492,11 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/btn_shape_pay"
                         android:paddingLeft="20dp"
-                        android:paddingTop="7dp"
+                        android:paddingTop="5dp"
                         android:paddingRight="20dp"
-                        android:paddingBottom="7dp"
+                        android:paddingBottom="5dp"
                         android:text="Pay Now"
+                        android:textAllCaps="false"
                         android:textColor="@color/black" />
 
 
@@ -495,15 +511,27 @@
                 android:layout_below="@+id/rl1">
 
 
+                <View
+                    android:id="@+id/view_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/gray" />
+
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_receipt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:id="@+id/tv_receipt"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textStyle="bold"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/view_2"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="Receipt here :"
-                    android:textColor="@color/black"/>
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
