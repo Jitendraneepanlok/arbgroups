@@ -249,14 +249,34 @@
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/paid_amount"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/tv10"
                 android:text="@string/app_name"
-                android:textColor="@color/black"
-                android:id="@+id/tv_notes"
-                android:layout_below="@+id/paid_amount"
-                android:layout_margin="5dp"/>
+                android:textColor="@color/black" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/btn_shape"
+                android:text="Pay Now"
+                android:id="@+id/txt_paynow"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_below="@+id/tv_notes"
+                android:layout_alignParentRight="true"/>
+
 
         </RelativeLayout>
 

@@ -1,12 +1,14 @@
 package com.arv.groups.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
+import com.arv.groups.Activity.PaymentOptionsActivity
 import com.arv.groups.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -39,6 +41,7 @@ class ReceiptAdapter(var context: Context) : RecyclerView.Adapter<ReceiptAdapter
         var InstallmentDate :AppCompatTextView
         var paid_amount :AppCompatTextView
         var tv_notes :AppCompatTextView
+        var txt_paynow :AppCompatTextView
 
 
         init {
@@ -52,6 +55,7 @@ class ReceiptAdapter(var context: Context) : RecyclerView.Adapter<ReceiptAdapter
             InstallmentDate = itemView.findViewById(R.id.InstallmentDate)
             paid_amount = itemView.findViewById(R.id.paid_amount)
             tv_notes  =itemView.findViewById(R.id.tv_notes)
+            txt_paynow = itemView.findViewById(R.id.txt_paynow)
 
 
             itemView.setOnClickListener {
@@ -93,12 +97,11 @@ class ReceiptAdapter(var context: Context) : RecyclerView.Adapter<ReceiptAdapter
         holder.paid_amount.text = paidamount
         holder.tv_notes.text = notes
 
-        /* holder.txt_view.setOnClickListener() {
-             val intent = Intent(context, ViewAllActivity::class.java)
-
+         holder.txt_paynow.setOnClickListener() {
+             val intent = Intent(context, PaymentOptionsActivity::class.java)
              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
              context.startActivity(intent)
-         }*/
+         }
     }
 
     override fun getItemCount() = dataList.length()

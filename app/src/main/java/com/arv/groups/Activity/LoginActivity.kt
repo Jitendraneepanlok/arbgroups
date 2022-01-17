@@ -49,13 +49,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var cb_check: AppCompatCheckBox
     private lateinit var btn_send_otp: Button
     private lateinit var btn_login: Button
-    private lateinit var floatingActionButton :FloatingActionButton
-
     lateinit var sessionManager: SessionManager
     var ischecked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
         if (checkForInternet(this)) {
             Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show()
         } else {
