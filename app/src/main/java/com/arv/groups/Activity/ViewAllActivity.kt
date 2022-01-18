@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.arv.groups.Adapters.DetailsAdapter
 import com.arv.groups.Adapters.ReceiptAdapter
 import com.arv.groups.FoxFun
+import com.arv.groups.prefrences.SessionManager
 import com.itextpdf.text.Document
 import com.itextpdf.text.Paragraph
 import com.itextpdf.text.pdf.PdfWriter
@@ -81,87 +82,23 @@ class ViewAllActivity : AppCompatActivity() {
 
     private lateinit var reciept_recycler :RecyclerView
     private lateinit var adapter: ReceiptAdapter
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_view_all)
+        sessionManager = SessionManager(applicationContext)
         initView()
         getRecieptData()
     }
 
-    private fun getRecieptData() {
-        reciept_recycler = findViewById<RecyclerView>(R.id.reciept_recycler)
-        reciept_recycler.layoutManager = LinearLayoutManager(applicationContext)
-        adapter = applicationContext?.let { ReceiptAdapter(it) }!!
-        reciept_recycler.adapter = adapter
-        adapter.setOnItemClickListner(object : ReceiptAdapter.onItemClickedListner {
-            override fun onItemclicked(position: Int) {
-                when (position) {
-                    0 -> Log.e("postion 0", "")
-                    1 -> Log.e("postion 1", "")
-                }
-            }
-        })
-
-        val pDialog = ProgressDialog(this@ViewAllActivity)
-        pDialog.setMessage(application?.getString(R.string.dialog_msg));
-        pDialog.setCancelable(false);
-        pDialog.show();
-
-        val username: String = "8447094063"
-        val plotnumber :String ="297"
-
-        var mq :String = "select receiptnumber,receiptdate,paymentmode,notes,paymentbankname,chequedate,chequeno , " +
-                "(select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID)  InstallmentAmount " +
-                ",(select top 1 InstallmentDate  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) " +
-                "InstallmentDate " +
-                ",(paidamount) as paidamount " +
-                "FROM PropertyDetails pl " +
-                " WHERE LTRIM(RTRIM(PhoneNumber))='"+username+"'   and PlotNumber='"+plotnumber+"' order by  InstallmentDate "
-
-        FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
-            override fun onSuccess(Result1: JSONObject?) {
-                if (Result1?.length()!! > 0) {
-                    pDialog.dismiss()
-                    var Result: JSONArray = JSONArray();
-                    try {
-                        Result = JSONArray(Result1.getString("Table1"));
-                    } catch (e: Exception) {
-                        e.printStackTrace();
-                    }
-                    if (Result.length() > 0) {
-                        pDialog.dismiss()
-
-                        adapter.setDataList(Result)
-                        adapter.notifyDataSetChanged()
-                        pDialog.dismiss()
-                       /* for (i in 0 until Result.length()) {
-                            Log.e("dsa",""+ FoxFun.getColVal(Result, i, "receiptnumber"))
-
-                            pDialog.dismiss()
-                        }*/
-                    } else {
-                        pDialog.dismiss()
-                        Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    pDialog.dismiss()
-                    Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            override fun onError(Error: String?) {
-                Log.e("ApiFail", "" + Error.toString())
-                pDialog.dismiss()
-            }
-        })
-
-    }
 
     private fun initView() {
         tv_instalment_amount_value = findViewById<AppCompatTextView>(R.id.tv_instalment_amount_value)
-        InstallmentAmount = intent.getStringExtra("InstallmentAmount").toString()
-        tv_instalment_amount_value.setText(InstallmentAmount)
+        if (intent.getStringExtra("InstallmentAmount")!=null) {
+            InstallmentAmount = intent.getStringExtra("InstallmentAmount").toString()
+            tv_instalment_amount_value.setText(InstallmentAmount)
+        }
 
         tv_plot_number_value = findViewById<AppCompatTextView>(R.id.tv_plot_number_value)
         plotNumber = intent.getStringExtra("plotNumber").toString()
@@ -222,18 +159,7 @@ class ViewAllActivity : AppCompatActivity() {
         tv_invoice_id_value = findViewById<AppCompatTextView>(R.id.tv_invoice_id_value)
         InvoiceID = intent.getStringExtra("InvoiceID").toString()
         tv_invoice_id_value.setText(InvoiceID)
-       /*
-        adapter.setOnItemClickListner(object : ViewAllDetailsAdapter.onItemClickedListner {
-            override fun onItemclicked(position: Int) {
-                Log.e("postion", "" + position)
-                when (position) {
-                    0 -> Log.e("postion 0", "")
-                    1 -> Log.e("postion 1", "")
-                    2 -> Log.e("postion 2", "")
 
-                }
-            }
-        })*/
         //toolbar showing textview
 
         tv_payment = findViewById(R.id.tv_payment)
@@ -244,13 +170,12 @@ class ViewAllActivity : AppCompatActivity() {
             startActivity(Intent(this@ViewAllActivity, HomeActivity::class.java))
         }
 
-        btn_pay = findViewById<AppCompatButton>(R.id.btn_pay)
+       /* btn_pay = findViewById<AppCompatButton>(R.id.btn_pay)
         btn_pay.setOnClickListener(){
             val intent :Intent = Intent(applicationContext,PaymentOptionsActivity::class.java)
             intent.putExtra("InstallmentAmount",InstallmentAmount)
            startActivity(intent)
-
-        }
+        }*/
 
         pdfdownload = findViewById<AppCompatButton>(R.id.pdfdownload)
         pdfdownload.setOnClickListener() {
@@ -266,6 +191,75 @@ class ViewAllActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun getRecieptData() {
+        reciept_recycler = findViewById<RecyclerView>(R.id.reciept_recycler)
+        reciept_recycler.layoutManager = LinearLayoutManager(applicationContext)
+        adapter = applicationContext?.let { ReceiptAdapter(it) }!!
+        reciept_recycler.adapter = adapter
+        adapter.setOnItemClickListner(object : ReceiptAdapter.onItemClickedListner {
+            override fun onItemclicked(position: Int) {
+                when (position) {
+                    0 -> Log.e("postion 0", "")
+                    1 -> Log.e("postion 1", "")
+                }
+            }
+        })
+
+        val pDialog = ProgressDialog(this@ViewAllActivity)
+        pDialog.setMessage(application?.getString(R.string.dialog_msg));
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        /*val username: String = "8447094063"
+        val plotnumber :String ="297"*/
+        val userphone = sessionManager.getUserData(SessionManager.PHONENO).toString()
+
+        var mq :String = "select receiptnumber,receiptdate,paymentmode,notes,paymentbankname,chequedate,chequeno , " +
+                "(select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID)  InstallmentAmount " +
+                ",(select top 1 InstallmentDate  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) " +
+                "InstallmentDate " + ",(paidamount) as paidamount " + "FROM PropertyDetails pl " +
+                " WHERE LTRIM(RTRIM(PhoneNumber))='"+userphone+"'   and PlotNumber='"+plotNumber+"' order by  InstallmentDate "
+
+        FoxFun.getdatamod(this, mq, "", "", "", "", object : FoxFun.Callback {
+            override fun onSuccess(Result1: JSONObject?) {
+                if (Result1?.length()!! > 0) {
+                    pDialog.dismiss()
+                    var Result: JSONArray = JSONArray();
+                    try {
+                        Result = JSONArray(Result1.getString("Table1"));
+                    } catch (e: Exception) {
+                        e.printStackTrace();
+                    }
+                    if (Result.length() > 0) {
+                        pDialog.dismiss()
+
+                        adapter.setDataList(Result)
+                        adapter.notifyDataSetChanged()
+                        pDialog.dismiss()
+                        /* for (i in 0 until Result.length()) {
+                             Log.e("dsa",""+ FoxFun.getColVal(Result, i, "receiptnumber"))
+
+                             pDialog.dismiss()
+                         }*/
+                    } else {
+                        pDialog.dismiss()
+                        Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    pDialog.dismiss()
+                    Toast.makeText(this@ViewAllActivity, "!Invalid Credientials.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            override fun onError(Error: String?) {
+                Log.e("ApiFail", "" + Error.toString())
+                pDialog.dismiss()
+            }
+        })
+
+    }
+
 
     private fun DownloadPdf() {
 

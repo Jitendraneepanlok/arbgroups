@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import com.arv.groups.R
+import com.arv.groups.prefrences.SessionManager
 import com.google.android.material.textfield.TextInputEditText
 import dev.shreyaspatil.easyupipayment.EasyUpiPayment
 import dev.shreyaspatil.easyupipayment.listener.PaymentStatusListener
@@ -31,12 +32,17 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
     private lateinit var img_back :AppCompatImageView
     private lateinit var PaidAmount : String
     private lateinit var button_pay : AppCompatButton
+    lateinit var sessionManager: SessionManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment_options)
+        sessionManager = SessionManager(applicationContext)
+
+        // get Data from Receiept adapter class
         PaidAmount = intent.getStringExtra("InstallmentAmount").toString()
+
 
         initViews()
     }
@@ -48,6 +54,7 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
         }
         field_vpa = findViewById<TextInputEditText>(R.id.field_vpa)
         field_name = findViewById<TextInputEditText>(R.id.field_name)
+        field_name.setText(sessionManager.getUserData(SessionManager.NAME).toString())
         field_payee_merchant_code = findViewById<TextInputEditText>(R.id.field_payee_merchant_code)
         field_transaction_id = findViewById<TextInputEditText>(R.id.field_transaction_id)
         field_transaction_ref_id = findViewById<TextInputEditText>(R.id.field_transaction_ref_id)

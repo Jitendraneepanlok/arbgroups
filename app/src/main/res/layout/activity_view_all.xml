@@ -466,9 +466,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/view_1"
-                        android:layout_alignParentLeft="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
                         android:background="@drawable/btn_shape_pay"
                         android:drawableLeft="@drawable/ic_print"
                         android:drawablePadding="10dp"
@@ -476,28 +474,30 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:text="Download"
+                        android:layout_alignParentRight="true"
                         android:textAllCaps="false"
                         android:textColor="@color/black" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_pay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/view_1"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:background="@drawable/btn_shape_pay"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="5dp"
-                        android:text="Pay Now"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black" />
+<!--                    <androidx.appcompat.widget.AppCompatButton-->
+<!--                        android:id="@+id/btn_pay"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_below="@+id/view_1"-->
+<!--                        android:layout_alignParentRight="true"-->
+<!--                        android:layout_marginStart="20dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginEnd="20dp"-->
+<!--                        android:layout_marginRight="20dp"-->
+<!--                        android:layout_marginBottom="20dp"-->
+<!--                        android:background="@drawable/btn_shape_pay"-->
+<!--                        android:paddingLeft="20dp"-->
+<!--                        android:paddingTop="5dp"-->
+<!--                        android:paddingRight="20dp"-->
+<!--                        android:visibility="invisible"-->
+<!--                        android:paddingBottom="5dp"-->
+<!--                        android:text="Pay Now"-->
+<!--                        android:textAllCaps="false"-->
+<!--                        android:textColor="@color/black" />-->
 
 
                 </RelativeLayout>
@@ -508,8 +508,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rl1">
-
+                android:layout_below="@+id/rl1"
+                android:layout_marginTop="10dp">
 
                 <View
                     android:id="@+id/view_2"
@@ -523,9 +523,9 @@
                     android:id="@+id/tv_receipt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/view_2"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/view_2"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="Receipt here :"

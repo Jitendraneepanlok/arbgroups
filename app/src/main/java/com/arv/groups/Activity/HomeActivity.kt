@@ -71,7 +71,7 @@ class HomeActivity : AppCompatActivity() {
         pDialog.setCancelable(false);
         pDialog.show();
 
-        val username: String = "8447094063"
+        val username = sessionManager.getUserData(SessionManager.PHONENO).toString()
         var mq: String =
             "select InvoiceID, InstallmentAmount,plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,\n" +
                     "PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,sum(paidamount) paidamount,count(paidamount)-1 as paidemi,max(baseamount) baseamount from (SELECT pl.InvoiceID,  (select top 1 InstallmentAmount  from PropertyPlanDetail  pd where pd.InvoiceID=pl.InvoiceID and pd.PlanID=pl.PlanID) InstallmentAmount,  plotNumber,ProjectName,PropertyType,AgentName,agentcode,agentNumber,PerSquareCost,PropertySize,PlanName,MeasurementType,dimension ,(pl.paidamount) as paidamount,baseamount \n" +

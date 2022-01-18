@@ -99,6 +99,7 @@ class ReceiptAdapter(var context: Context) : RecyclerView.Adapter<ReceiptAdapter
 
          holder.txt_paynow.setOnClickListener() {
              val intent = Intent(context, PaymentOptionsActivity::class.java)
+             intent.putExtra("InstallmentAmount",InstallmentAmount)
              intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
              context.startActivity(intent)
          }
