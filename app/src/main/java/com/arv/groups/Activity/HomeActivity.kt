@@ -172,9 +172,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         dialog?.window!!.setGravity(Gravity.CENTER)
-        dialog?.window!!.setLayout(
-            WindowManager.LayoutParams.MATCH_PARENT,
-            WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog?.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialog.show()
     }
 

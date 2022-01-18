@@ -41,8 +41,9 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
         sessionManager = SessionManager(applicationContext)
 
         // get Data from Receiept adapter class
-        PaidAmount = intent.getStringExtra("InstallmentAmount").toString()
-
+        if (intent.getStringExtra("InstallmentAmount")!=null) {
+            PaidAmount = intent.getStringExtra("InstallmentAmount").toString()
+        }
 
         initViews()
     }
@@ -53,14 +54,20 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
             startActivity(Intent(this@PaymentOptionsActivity, ViewAllActivity::class.java))
         }
         field_vpa = findViewById<TextInputEditText>(R.id.field_vpa)
+
+        //here set user name from session Manager class into Edittext
         field_name = findViewById<TextInputEditText>(R.id.field_name)
         field_name.setText(sessionManager.getUserData(SessionManager.NAME).toString())
+
         field_payee_merchant_code = findViewById<TextInputEditText>(R.id.field_payee_merchant_code)
         field_transaction_id = findViewById<TextInputEditText>(R.id.field_transaction_id)
         field_transaction_ref_id = findViewById<TextInputEditText>(R.id.field_transaction_ref_id)
         field_description = findViewById<TextInputEditText>(R.id.field_description)
+
+        // here set Installment amount from getting from ReceiptAdapter class
         field_amount = findViewById<TextInputEditText>(R.id.field_amount)
         field_amount.setText(PaidAmount)
+
         radioAppChoice = findViewById<RadioGroup>(R.id.radioAppChoice)
 
 
