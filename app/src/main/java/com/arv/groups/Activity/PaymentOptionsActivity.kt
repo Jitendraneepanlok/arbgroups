@@ -52,6 +52,7 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
         img_back = findViewById(R.id.img_back)
         img_back.setOnClickListener() {
             startActivity(Intent(this@PaymentOptionsActivity, ViewAllActivity::class.java))
+            finish()
         }
         field_vpa = findViewById<TextInputEditText>(R.id.field_vpa)
 

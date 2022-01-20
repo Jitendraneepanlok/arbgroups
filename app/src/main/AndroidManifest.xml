@@ -27,13 +27,12 @@
         <activity
             android:name=".Activity.ViewAllActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
         <activity
             android:name=".Activity.HomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Activity.ForgotPassActivity"
             android:exported="true"
@@ -47,8 +46,7 @@
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:windowSoftInputMode="adjustNothing">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

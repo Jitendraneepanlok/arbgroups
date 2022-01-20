@@ -15,6 +15,23 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
 
     var dataList = JSONArray()
     private lateinit var mlistner: onItemClickedListner
+    private lateinit var invoice_id: String
+    private lateinit var projectName: String
+    private lateinit var agentNumber: String
+    private lateinit var agentName: String
+    private lateinit var plotNumber: String
+    private lateinit var planName: String
+    private lateinit var installmentAmount: String
+    private lateinit var propertyType: String
+    private lateinit var PerSquareCost: String
+    private lateinit var PropertySize: String
+    private lateinit var MeasurementType: String
+    private lateinit var dimension: String
+    private lateinit var paidamount: String
+    private lateinit var paidemi: String
+    private lateinit var baseamount: String
+    private lateinit var agentcode: String
+
 
     internal fun setDataList(dataList: JSONArray) {
         this.dataList = dataList
@@ -62,22 +79,82 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
         // Get the data based JsonObject on position
         var data: JSONObject = dataList[position] as JSONObject
         Log.e("ads", "" + data)
-        var invoice_id: String = data.getString("InvoiceID")
-        var projectName: String = data.getString("ProjectName")
-        var agentNumber: String = data.getString("agentNumber")
-        var agentName: String = data.getString("AgentName")
-        var plotNumber: String = data.getString("plotNumber")
-        var planName: String = data.getString("PlanName")
-        var installmentAmount: String = data.getString("InstallmentAmount")
-        var propertyType: String = data.getString("PropertyType")
-        var PerSquareCost: String = data.getString("PerSquareCost")
-        var PropertySize: String = data.getString("PropertySize")
-        var MeasurementType: String = data.getString("MeasurementType")
-        var dimension: String = data.getString("dimension")
-        var paidamount: String = data.getString("paidamount")
-        var paidemi: String = data.getString("paidemi")
-        var baseamount: String = data.getString("baseamount")
-        var agentcode :String = data.getString("agentcode")
+
+
+
+        if (data.getString("InvoiceID") != null) {
+            invoice_id = data.getString("InvoiceID")
+        }
+
+        if (data.getString("ProjectName") != null) {
+            projectName = data.getString("ProjectName")
+        }
+
+        if (data.getString("agentNumber") != null) {
+            agentNumber = data.getString("agentNumber")
+
+        }
+
+        if (data.getString("AgentName") != null) {
+            agentName = data.getString("AgentName")
+        }
+
+        if (data.getString("plotNumber") != null) {
+            plotNumber = data.getString("plotNumber")
+        }
+
+        if (data.getString("PlanName") != null) {
+            planName = data.getString("PlanName")
+        }
+
+        if (data.getString("InstallmentAmount") != null) {
+            installmentAmount = data.getString("InstallmentAmount")
+
+        }
+
+        if (data.getString("PropertyType") != null) {
+            propertyType = data.getString("PropertyType")
+
+        }
+        if (data.getString("PerSquareCost") != null) {
+            PerSquareCost = data.getString("PerSquareCost")
+        }
+
+        if (data.getString("PropertySize") != null) {
+            PropertySize = data.getString("PropertySize")
+
+        }
+        if (data.getString("MeasurementType") != null) {
+            MeasurementType = data.getString("MeasurementType")
+
+        }
+
+        if (data.getString("dimension") != null) {
+            dimension = data.getString("dimension")
+
+        }
+
+
+        if (data.getString("paidamount") != null) {
+            paidamount = data.getString("paidamount")
+
+        }
+
+
+        if (data.getString("paidemi") != null) {
+            paidemi = data.getString("paidemi")
+
+        }
+
+        if (data.getString("baseamount") != null) {
+            baseamount = data.getString("baseamount")
+
+        }
+
+        if (data.getString("agentcode") != null) {
+            agentcode = data.getString("agentcode")
+
+        }
 
 
         // Set item views based on your views and JsonObject
@@ -104,7 +181,7 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
             intent.putExtra("paidamount", paidamount)
             intent.putExtra("paidemi", paidemi)
             intent.putExtra("baseamount", baseamount)
-            intent.putExtra("agentcode",agentcode)
+            intent.putExtra("agentcode", agentcode)
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent)
         }

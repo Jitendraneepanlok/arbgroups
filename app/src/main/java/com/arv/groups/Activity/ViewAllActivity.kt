@@ -96,8 +96,7 @@ class ViewAllActivity : AppCompatActivity() {
     private fun initView() {
         if (intent.getStringExtra("InstallmentAmount") != null) {
             InstallmentAmount = intent.getStringExtra("InstallmentAmount").toString()
-            tv_instalment_amount_value =
-                findViewById<AppCompatTextView>(R.id.tv_instalment_amount_value)
+            tv_instalment_amount_value = findViewById<AppCompatTextView>(R.id.tv_instalment_amount_value)
             tv_instalment_amount_value.setText(InstallmentAmount)
         }
 
@@ -310,7 +309,6 @@ class ViewAllActivity : AppCompatActivity() {
 
     }
 
-
     private fun DownloadPdf() {
 
         PDFData =
@@ -366,11 +364,7 @@ class ViewAllActivity : AppCompatActivity() {
         }*/
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             STORAGE_CODE -> {
