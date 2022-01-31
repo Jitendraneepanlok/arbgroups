@@ -1,15 +1,20 @@
 package com.arv.groups.Activity
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import com.arv.groups.R
 import com.arv.groups.prefrences.SessionManager
 import com.google.android.material.textfield.TextInputEditText
@@ -129,7 +134,12 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
 
     override fun onTransactionCompleted(transactionDetails: TransactionDetails) {
         // Transaction Completed
-        Log.e("TransactionDetails", transactionDetails.toString())
+        Log.e("TransactionId", transactionDetails.transactionId.toString())
+        Log.e("TransactionResponseCode", transactionDetails.responseCode.toString())
+        Log.e("TransactioRefnId", transactionDetails.transactionRefId.toString())
+
+        transactionDetails.transactionId?.let { OpenSucessDialog(it) }
+
         //textView_status.text = transactionDetails.toString()
 
         when (transactionDetails.transactionStatus) {
@@ -138,6 +148,25 @@ class PaymentOptionsActivity : AppCompatActivity(), PaymentStatusListener {
             TransactionStatus.SUBMITTED -> onTransactionSubmitted()
         }
     }
+
+    private fun OpenSucessDialog(it: String) {
+        val dialog = this?.let { Dialog(it, R.style.DialogTheme) }
+        dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setContentView(R.layout.payment_sucess_layout)
+        dialog?.setCancelable(false)
+
+        val txt_transaction_id :AppCompatTextView = dialog!!.findViewById(R.id.txt_transaction_id)
+        txt_transaction_id.setText("Transaction Id : "+it)
+
+        val txt_cancel: AppCompatTextView = dialog!!.findViewById(R.id.txt_cancel)
+        txt_cancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog?.window!!.setGravity(Gravity.CENTER)
+        dialog?.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog.show()
+    }
+
 
     override fun onTransactionCancelled() {
         // Payment Cancelled by User

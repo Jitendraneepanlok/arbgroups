@@ -252,7 +252,7 @@ class ViewAllActivity : AppCompatActivity() {
         pDialog.show();
 
         /*val username: String = "8447094063"
-        val plotnumber :String ="297"*/
+        val plotnumber :String ="297" itl04 */
         val userphone = sessionManager.getUserData(SessionManager.PHONENO).toString()
 
         var mq: String =

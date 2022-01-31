@@ -32,7 +32,6 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
     private lateinit var baseamount: String
     private lateinit var agentcode: String
 
-
     internal fun setDataList(dataList: JSONArray) {
         this.dataList = dataList
     }
@@ -79,8 +78,6 @@ class DetailsAdapter(var context: Context) : RecyclerView.Adapter<DetailsAdapter
         // Get the data based JsonObject on position
         var data: JSONObject = dataList[position] as JSONObject
         Log.e("ads", "" + data)
-
-
 
         if (data.getString("InvoiceID") != null) {
             invoice_id = data.getString("InvoiceID")
